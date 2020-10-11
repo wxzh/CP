@@ -1,8 +1,5 @@
 {-# LANGUAGE FlexibleContexts, PatternGuards, NoImplicitPrelude, LambdaCase, OverloadedStrings #-}
 
--- TODO: generate data from object algebra interfaces?
--- WARNING: Types must be expanded before desugaring
-
 module CP.Source.TypeCheck
   ( tcModule,
   ) where
@@ -32,7 +29,6 @@ tcModule m = do
   let sdecls = desugar decls
   -- Step 2: Check module
   (ty, m') <- tcM sdecls (desugarExpr $ mainExpr m) []
-  errThrow [DD $ mainExpr m']
   (_, e) <- localCtx (\_ -> emptyCtx) (tcModule2 m')
   return (ty, e)
   where
