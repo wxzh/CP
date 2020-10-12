@@ -6,7 +6,7 @@ This project can be built with
 [Stack](https://docs.haskellstack.org/en/stable/README/) or
 [Cabal](https://www.haskell.org/cabal/download.html).
 
-### Stack
+### Stack (Recommended)
 
 ```
 stack build
@@ -31,12 +31,12 @@ The REPL prompt is `>`
 - type `:?` for usage
 
 ```
-> :load examples/case_study.cp
+> :load case-studies/mini-interp.cp
 Typing result
 : String
 
 Evaluation result
-=> "letf $f = <Lambda> in let $x = 9.0 in appf $f $x is 81.0"
+=> "letf $f = <Lambda> in let $x = 9.0 in appf $f $x : Double = 81.0"
 ```
 
 ## Quick Reference
@@ -47,7 +47,7 @@ Like Haskell, a line comment starts with `--` and a comment block is wrapped by
 
 * Primitive type: `Double`, `Int`, `Bool`, `String`, `List`
 * Top type/value: `() : Top`
-* Bottom type/value: `undefined : Bot`
+* Bottom type: `Bot`
 * Type annotation: `2 : Int`
 * Merge: `true ,, 3`
 * Intersection type: `Bool & (Int -> Int)`
@@ -59,14 +59,23 @@ Like Haskell, a line comment starts with `--` and a comment block is wrapped by
 * Application: `id @Int 2`
 * Type declaration: `type Person = { name : String; male : Bool }`
 * Signature declaration: `type Sig<Exp> = { Lit : Int -> Exp; Add : Exp -> Exp -> Exp }`
-* Traits: `trait [self : Person] => { age = 42 }`
-* Method patterns: `(Add e1 e2).eval = e1.eval + e2.eval`
+* Trait: `trait [self : Person] => { age = 42 }`
+* Trait type: `Trait[Person, Age]`
+* Method pattern: `(Add e1 e2).eval = e1.eval + e2.eval`
 
 
-## Examples 
+## Examples
 
 See the [examples/](./examples/) directory. All examples can be tested:
 
 ```
 stack test
 ```
+
+## Case Studies
+
+All of the three case studies can be found in the [case-studies/](./case-studies/) directory:
+
+1. Scans (in CP, Haskell, Scala, and SEDEL): [scans.cp](./case-studies/scans.cp), [scans.hs](./case-studies/scans.hs), [scans.scala](./case-studies/scans.scala), and [scans.sl](./case-studies/scans.sl)
+2. Mini Interpreter: [mini-interp.cp](./case-studies/mini-interp.cp)
+3. C0 Compiler: [czero.cp](./case-studies/czero.cp)
