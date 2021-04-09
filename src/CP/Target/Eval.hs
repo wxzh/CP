@@ -51,7 +51,10 @@ data Value
   | VList ![Thunk]
 
 instance Show Value where
-  show (VLit n) = show n
+  show (VLit n) = 
+    if n == fromInteger (round n)
+    then show (round n)
+    else show n
   show (VBool True) = "true"
   show (VBool False) = "false"
   show (VPair _ _) = "<Pair>"
