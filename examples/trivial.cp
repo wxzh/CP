@@ -1,10 +1,10 @@
---> "((4.0 + 3.0) - 3.0) = 4.0"
+--> "((4 + 3) - 3) = 4"
 
 -- Examples in "The Expression Problem, Trivially!"
 
 
-type IEval = {eval : Double};
-lit (x : Double) = trait [self : IEval] => {
+type IEval = {eval : Int};
+lit (x : Int) = trait [self : IEval] => {
   eval = x
 };
 
@@ -19,7 +19,7 @@ sub (e1 : IEval) (e2 : IEval) = trait => {
 
 type IPrint = IEval & { print : String };
 
-litP (x : Double) = trait [self : IPrint] inherits lit x => {
+litP (x : Int) = trait [self : IPrint] inherits lit x => {
   print = x.toString
 };
 

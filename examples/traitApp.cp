@@ -1,6 +1,6 @@
---> 4.0
+--> 4
 
-type A = {m : Double, n : Double};
+type A = {m : Int, n : Int};
 
 genA = trait [self : A] => {
   m = 1;
@@ -13,12 +13,12 @@ genB = trait [self : A] => {
 };
 
 
-gen1 = trait [self : A] inherits genA \ {m : Double} ,, genB \ {n : Double} => {
+gen1 = trait [self : A] inherits genA \ {m : Int} ,, genB \ {n : Int} => {
   override m = super.m + 1
 };
 
 
-gen2 = trait [self : A] inherits genA \ {m : Double} ,, genB \ {n : Double} => {
+gen2 = trait [self : A] inherits genA \ {m : Int} ,, genB \ {n : Int} => {
   override m = (genA ^ self).m + 1
 };
 

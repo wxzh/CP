@@ -1,24 +1,24 @@
 --> "Round button has area: 28.26"
 
-type Point = { x : Double, y : Double };
-point (x : Double) (y : Double) = trait => {
+type Point = { x : Int, y : Int };
+point (x : Int) (y : Int) = trait => {
   x = x;
   y = y } ;
 
 pointTest  = new point 3 4;
 
-abs (x : Double) = if x < 0 then (0 - x) else x;
+abs (x : Int) = if x < 0 then (0 - x) else x;
 
-square (x : Double) = x * x;
+square (x : Int) = x * x;
 
 
-type Circle = Point & {radius : Double};
-circle (center : Point) (radius : Double) =
+type Circle = Point & {radius : Int};
+circle (center : Point) (radius : Int) =
   trait inherits point center.x center.y =>{ radius = radius };
 
 circleTest = new circle pointTest 3;
 
-type CircleFns = { area : Double, grow : Double, shrink : Double };
+type CircleFns = { area : Int, grow : Int, shrink : Int };
 circleFns = trait [self : Circle] => {
   area   = self.radius * self.radius * 3.14;
   grow   = self.radius + 1;
@@ -35,29 +35,29 @@ buttonFns = trait [self : Button] => {
   press (b : Bool) = if b then "pressing..." else "no pressing" };
 
 type RoundButton = Circle & Button;
-roundButton (radius : Double) (center: Point ) (label : String) = 
+roundButton (radius : Int) (center: Point ) (label : String) = 
   circle center radius ,, button label;
 
 
-asOval (shortRadius : Double) (longRadius : Double) = trait => {
+asOval (shortRadius : Int) (longRadius : Int) = trait => {
   radius = shortRadius;
   longRadius = longRadius };
 
 
-oval (shortRadius : Double) (longRadius : Double) (center: Point) =
-  (circle center shortRadius) \ { radius : Double } ,, asOval shortRadius longRadius;
+oval (shortRadius : Int) (longRadius : Int) (center: Point) =
+  (circle center shortRadius) \ { radius : Int } ,, asOval shortRadius longRadius;
 
-type Norm = { norm : Double -> Double -> Double };
+type Norm = { norm : Int -> Int -> Int };
 euclideanNorm = trait [self : Point] => {
-  norm (x : Double) (y : Double) = (square(self.x - x) + square(self.y - y)).sqrt };
+  norm (x : Int) (y : Int) = (square(self.x - x) + square(self.y - y)).sqrt };
 manhattanNorm = trait [self : Point] => {
-  norm (x : Double) (y : Double) = abs((self.x - x)) + abs((self.y - y)) };
+  norm (x : Int) (y : Int) = abs((self.x - x)) + abs((self.y - y)) };
 
-type CircleFns2 = CircleFns & { inCircle : Double -> Double -> Bool };
+type CircleFns2 = CircleFns & { inCircle : Int -> Int -> Bool };
 circleFns2 = trait [self : Circle & Norm ] inherits circleFns => {
-  inCircle (x : Double) (y : Double) = self.norm x y < self.radius };
+  inCircle (x : Int) (y : Int) = self.norm x y < self.radius };
 
-roundButtonFac (radius : Double) (center : Point) (norm : Trait[Point, Norm]) =
+roundButtonFac (radius : Int) (center : Point) (norm : Trait[Point, Norm]) =
   new roundButton radius center "Round button" ,, circleFns2 ,, buttonFns ,, norm;
 
 roundButtonTest2 = roundButtonFac 3 pointTest euclideanNorm;

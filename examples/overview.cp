@@ -1,14 +1,14 @@
---> "((4.0+8.0)*4.0) is 48.0"
+--> "((4+8)*4) is 48"
 
 -- BEGIN_SIG
 type ExpSig<Exp> = {
-  Lit : Double -> Exp;
+  Lit : Int -> Exp;
   Add : Exp -> Exp -> Exp;
 };
 -- END_SIG
 
 -- BEGIN_TRAIT_EVAL
-type Eval = { eval : Double };
+type Eval = { eval : Int };
 evalNum = trait implements ExpSig<Eval> => {
   (Lit     n).eval = n;
   (Add e1 e2).eval = e1.eval + e2.eval;
@@ -66,7 +66,7 @@ e = new evalNum ,, printNum ,, expAdd @(Eval&Print);
 
 {-
 -- BEGIN_USAGE
-e.test.print ++ " is " ++ e.test.eval.toString  --> "(4.0+8.0) is 12.0"
+e.test.print ++ " is " ++ e.test.eval.toString  --> "(4+8) is 12"
 -- END_USAGE
 -}
 
@@ -84,7 +84,7 @@ printAux = trait implements ExpSig<Print%PrintAux> => {
 
 {-
 -- BEGIN_MUTUAL_PRINTER
-(new printMutual ,, printAux ,, expAdd @(Print&PrintAux)).test.print  --> "4.0+8.0"
+(new printMutual ,, printAux ,, expAdd @(Print&PrintAux)).test.print  --> "4+8"
 -- END_MUTUAL_PRINTER
 -}
 
@@ -106,5 +106,5 @@ expMul Exp = trait [self : MulSig<Exp>] inherits expAdd @Exp => {
   override test = new Mul super.test (new Lit 4);
 };
 e' = new evalMul ,, printMul ,, expMul @(Eval & Print);
-e'.test.print ++ " is " ++ e'.test.eval.toString  --> "((4.0+8.0)*4.0) is 48.0"
+e'.test.print ++ " is " ++ e'.test.eval.toString  --> "((4+8)*4) is 48"
 -- END_EXP_MUL

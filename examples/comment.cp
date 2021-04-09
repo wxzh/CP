@@ -1,4 +1,4 @@
---> "Have fun!4.0"
+--> "Have fun!4"
 
 type Comment = { content : String };
 comment (c : String) = trait [self : Comment] => {
@@ -6,8 +6,8 @@ comment (c : String) = trait [self : Comment] => {
 };
 
 
-type Up = { upvotes : Double };
-up (u : Double) = trait [self : Up] => {
+type Up = { upvotes : Int };
+up (u : Int) = trait [self : Up] => {
   upvotes = u
 };
 

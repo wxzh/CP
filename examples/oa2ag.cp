@@ -1,7 +1,7 @@
---> "((3.0){2.0}+(4.0){3.0}){1.0}"
+--> "((3){2}+(4){3}){1}"
 
 type PreExprSig In Out = {
-  Lit : Double -> Out,
+  Lit : Int -> Out,
   Add : In -> In -> Out
 };
 

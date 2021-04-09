@@ -1,7 +1,7 @@
---> 3.0
+--> 3
 
 type IdType B = B -> B;
 
-id : IdType Double = \x -> x;
+id : IdType Int = \x -> x;
 
 id 3

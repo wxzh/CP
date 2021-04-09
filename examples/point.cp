@@ -1,15 +1,15 @@
---> "(3.0, 4.0)"
+--> "(3, 4)"
 
-type Point = { x_point : Double, get : Top -> String };
+type Point = { x_point : Int, get : Top -> String };
 
-point (x : Double) = trait [self : Point] => {
+point (x : Int) = trait [self : Point] => {
   x_point = x;
   get (_ : Top) = self.x_point.toString
 };
 
-type Point2D = Point & { y_point : Double };
+type Point2D = Point & { y_point : Int };
 
-point2D (x: Double) (y : Double) = trait [self : Point2D] inherits (point x) \ {get : Top -> String} => {
+point2D (x: Int) (y : Int) = trait [self : Point2D] inherits (point x) \ {get : Top -> String} => {
     y_point = y;
     get (_ : Top) = "(" ++ self.x_point.toString ++ ", " ++ self.y_point.toString ++ ")"
   };

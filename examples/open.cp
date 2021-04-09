@@ -1,4 +1,4 @@
---> 192.0
+--> 192
 
 type C = {x: Int, x: String};
 

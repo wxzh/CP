@@ -1,4 +1,4 @@
---> 2.0
+--> 2
 
 -- shadowing
 (l (y: Int) (z: String)).g = "1";

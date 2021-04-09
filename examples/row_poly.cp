@@ -1,4 +1,4 @@
---> 15.0
+--> 15
 
 {-
 
@@ -6,42 +6,42 @@ Emulate row polymorphism
 
 -}
 
-type Growable = { grow : Double -> Double };
+type Growable = { grow : Int -> Int };
 
 type Fish = {
-  size : Double,
-  grow : Double -> Double
+  size : Int,
+  grow : Int -> Int
 };
 
 type Dog = {
-  size : Double,
-  grow : Double -> Double,
+  size : Int,
+  grow : Int -> Int,
   howl : Top -> String
 };
 
-type Size = { size : Double };
+type Size = { size : Int };
 
-dory (init_size : Double) = trait [self : Size] => {
+dory (init_size : Int) = trait [self : Size] => {
   size = init_size;
-  grow (amt : Double) = amt + self.size
+  grow (amt : Int) = amt + self.size
 };
 
 
-snoopy (init_size : Double) = trait [self : Size] => {
+snoopy (init_size : Int) = trait [self : Size] => {
   size = init_size;
-  grow (amt : Double) = amt + self.size;
+  grow (amt : Int) = amt + self.size;
   howl (_ : Top) = "ARH-WOOOOOOOOOOOOOOOOOOOO"
 };
 
 
 -- Make something picky...
 picky_mixin (A * Growable) (base : Trait[Size, Growable & A]) = trait [self : Size] inherits base => {
-  override grow (amt : Double) = super.grow (0.75 * amt)
+  override grow (amt : Int) = super.grow (0.75 * amt)
 };
 
-picky_dory (init_size : Double) = picky_mixin @Size (dory init_size);
+picky_dory (init_size : Int) = picky_mixin @Size (dory init_size);
 
-picky_snoopy (init_size : Double) = picky_mixin @(Size & {howl : Top -> String}) (snoopy init_size);
+picky_snoopy (init_size : Int) = picky_mixin @(Size & {howl : Top -> String}) (snoopy init_size);
 
 
 -- Making objects

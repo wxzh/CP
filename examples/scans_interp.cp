@@ -1,4 +1,4 @@
---> "Width = 4.0; Depth = 3.0; WellSized = true; length = 3.0"
+--> "Width = 4; Depth = 3; WellSized = true; length = 3"
 
 max (x: Int) (y: Int) = if x > y then x else y;
 

@@ -1,16 +1,16 @@
---> "((5.0 - (2.0 + 3.0)) + 3.0) = 3.0"
+--> "((5 - (2 + 3)) + 3) = 3"
 
 type ExpAlg E = {
-  lit : Double -> E,
+  lit : Int -> E,
   add : E -> E -> E
 };
 
 type Exp = { accept : forall E . ExpAlg E -> E };
 
-type IEval = { eval : Double };
+type IEval = { eval : Int };
 
 evalAlg = trait => {
-  lit (x : Double)   = { eval = x };
+  lit (x : Int)   = { eval = x };
   add (x : IEval) (y : IEval) = { eval = x.eval + y.eval }
 };
 
@@ -26,14 +26,14 @@ type IPrint = { print : String };
 
 
 printAlg = trait [self : Top] => {
-  lit (x : Double) = { print = x.toString };
+  lit (x : Int) = { print = x.toString };
   add (x : IPrint) (y : IPrint) = { print = "(" ++ x.print ++ " + " ++ y.print ++ ")" };
   sub (x : IPrint) (y : IPrint) = { print = "(" ++ x.print ++ " - " ++ y.print ++ ")" }
 }; -- : SubExpAlg[IPrint];
 
 
 
-lit (n : Double) = {
+lit (n : Int) = {
   accept E (f: ExpAlg E) = f.lit n
 };
 add (e1 : Exp) (e2 : Exp) = {
@@ -57,5 +57,5 @@ e3  = { accept E (f: SubExpAlg E) = f.add (e2.accept @E f) (f.lit 3) };
 alg = combine @IEval @IPrint subEvalAlg printAlg;
 o = e3.accept @(IEval & IPrint) (new alg);
 o.print ++ " = " ++ o.eval.toString
--- Output: "((5.0 - (2.0 + 3.0)) + 3.0) = 3.0"
+-- Output: "((5 - (2 + 3)) + 3) = 3"
 -- END_COMBINE1_TEST

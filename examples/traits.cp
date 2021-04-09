@@ -35,7 +35,7 @@ Trait inheritance & Abstract methods
 -}
 
 --BEGIN_VERSION
-type Version = { version_num : Double };
+type Version = { version_num : Int };
 --END _VERSION
 
 
@@ -45,7 +45,7 @@ editor2 = trait inherits editor => { version_num = 0.1 };
 
 
 --BEGIN_RETRIEVE
-type Retrieve = { get_version : Top -> Double };
+type Retrieve = { get_version : Top -> Int };
 retrieve = trait [self : Version] => { get_version (_ : Top) = self.version_num };
 --END_RETRIEVE
 
@@ -96,18 +96,18 @@ type ModalEditor = EditorVersion & ModalEdit;
 
 --BEGIN_MODAL_OK
 editor3 (init_mode : String) = -- trait [self : ModalEditor] inherits --advantage
-  editor2 \ {version_num : Double} ,, retrieve ,, modal_edit init_mode;
+  editor2 \ {version_num : Int} ,, retrieve ,, modal_edit init_mode;
 --END_MODAL_OK
 
 editor4 (init_mode : String) = trait [self : ModalEditor]
-  inherits editor2 \ {version_num : Double} ,, retrieve ,,
-           (modal_edit init_mode) \ {version_num : Double} => {
+  inherits editor2 \ {version_num : Int} ,, retrieve ,,
+           (modal_edit init_mode) \ {version_num : Int} => {
     version_num = 0.3
 };
 
 
 --BEGIN_MODAL_OK2
-editor4 (init_mode : String) = trait [self : ModalEditor] inherits editor2 \ {version_num : Double} ,, retrieve ,, modal_edit init_mode  => {
+editor4 (init_mode : String) = trait [self : ModalEditor] inherits editor2 \ {version_num : Int} ,, retrieve ,, modal_edit init_mode  => {
     override version_num = 0.3
 };
 --END_MODAL_OK2
@@ -115,13 +115,13 @@ editor4 (init_mode : String) = trait [self : ModalEditor] inherits editor2 \ {ve
 
 --BEGIN_MODAL_OK3
 editor5 (init_mode : String) = trait [self : ModalEditor]
-  inherits editor2 \ {version_num : Double} ,, retrieve ,, modal_edit init_mode => {
+  inherits editor2 \ {version_num : Int} ,, retrieve ,, modal_edit init_mode => {
     override version_num = super.version_num + 0.1 };
 --END_MODAL_OK3
 
 --BEGIN_MODAL_OK4
 editor6 (init_mode : String) = trait [self : ModalEditor]
-  inherits editor2 \ {version_num : Double} ,, retrieve ,, modal_edit init_mode  => {
+  inherits editor2 \ {version_num : Int} ,, retrieve ,, modal_edit init_mode  => {
     override version_num = (editor2 ^ self).version_num + 0.1
 };
 --END_MODAL_OK4

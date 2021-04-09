@@ -1,7 +1,7 @@
---> 192.0
+--> 192
 
 
-remove (B * {low : Double}) (x : B & {low : Double}) = x : B;
+remove (B * {low : Int}) (x : B & {low : Int}) = x : B;
 
 
-remove @{high : Double} {high = 192, low=189}
+remove @{high : Int} {high = 192, low=189}

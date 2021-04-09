@@ -1,8 +1,8 @@
---> 81.0
+--> 81
 
 type Env T = String -> T;
-type EnvD = Env Double;
-type Func = Double -> Double;
+type EnvD = Env Int;
+type Func = Int -> Int;
 type EnvF = Env Func;
 
 empty T = \(_ : String) -> undefined : T;
@@ -11,7 +11,7 @@ insert T (s : String) (v : T) (env : Env T) =
   \(s': String) -> if s == s' then v else lookup @T s' env;
 
 type ExpSig<Exp> = {
-  Lit : Double -> Exp;
+  Lit : Int -> Exp;
   Add : Exp -> Exp -> Exp;
 };
 
@@ -58,27 +58,27 @@ e.test.print { pos = 0 }  --> (({2}+{3})+({5}+{6}))
 -}
 
 -- BEGIN_VARIABLE_BINDING
-type Eval = { eval : EnvD -> Double };
+type Eval = { eval : EnvD -> Int };
 evalNum = trait implements ExpSig<Eval> => {
   (Lit     n).eval (env:EnvD) = n;
   (Add e1 e2).eval (env:EnvD) = e1.eval env + e2.eval env;
 };
 evalVar = trait implements VarSig<Eval> => {
-  (Let s e1 e2).eval (env:EnvD) = e2.eval (insert @Double s (e1.eval env) env);
-  (Var       s).eval (env:EnvD) = lookup @Double s env;
+  (Let s e1 e2).eval (env:EnvD) = e2.eval (insert @Int s (e1.eval env) env);
+  (Var       s).eval (env:EnvD) = lookup @Int s env;
 };
 -- END_VARIABLE_BINDING
 
 -- BEGIN_INTRINSIC_FUNCTIONS
-type Eval = { eval : EnvD -> EnvF -> Double };
+type Eval = { eval : EnvD -> EnvF -> Int };
 evalNum = trait implements ExpSig<Eval> => {
   (Lit     n).eval (envD:EnvD) (envF:EnvF) = n;
   (Add e1 e2).eval (envD:EnvD) (envF:EnvF) = e1.eval envD envF + e2.eval envD envF;
 };
 evalVar = trait implements VarSig<Eval> => {
   (Let s e1 e2).eval (envD:EnvD) (envF:EnvF) =
-    e2.eval (insert @Double s (e1.eval envD envF) envD) envF;
-  (Var       s).eval (envD:EnvD) (envF:EnvF) = lookup @Double s envD;
+    e2.eval (insert @Int s (e1.eval envD envF) envD) envF;
+  (Var       s).eval (envD:EnvD) (envF:EnvF) = lookup @Int s envD;
 };
 evalFunc = trait implements FuncSig<Eval> => {
   (LetF s f e).eval (envD:EnvD) (envF:EnvF) = e.eval envD (insert @Func s f envF);
@@ -87,7 +87,7 @@ evalFunc = trait implements FuncSig<Eval> => {
 -- END_INTRINSIC_FUNCTIONS
 
 -- BEGIN_EVAL_CTX
-type Eval Context = { eval : Context -> Double };
+type Eval Context = { eval : Context -> Int };
 -- END_EVAL_CTX
 
 -- BEGIN_POLY_EVAL
@@ -103,7 +103,7 @@ expAdd Exp = trait [self : ExpSig<Exp>] => {
 
 {-
 -- BEGIN_EVAL_ADD
-(new evalNum @Top ,, expAdd @(Eval Top)).add.eval ()  --> 12.0
+(new evalNum @Top ,, expAdd @(Eval Top)).add.eval ()  --> 12
 -- END_EVAL_ADD
 -}
 
@@ -114,8 +114,8 @@ type CtxD = { envD : EnvD };
 -- BEGIN_EVAL_VAR
 evalVar (Context * CtxD) = trait implements VarSig<Eval (CtxD&Context)> => {
   (Let s e1 e2).eval (ctx:CtxD&Context) =
-    e2.eval ({ envD = insert @Double s (e1.eval ctx) ctx.envD } ,, ctx:Context);
-  (Var       s).eval (ctx:CtxD&Context) = lookup @Double s ctx.envD;
+    e2.eval ({ envD = insert @Int s (e1.eval ctx) ctx.envD } ,, ctx:Context);
+  (Var       s).eval (ctx:CtxD&Context) = lookup @Int s ctx.envD;
 };
 -- END_EVAL_VAR
 
@@ -130,10 +130,10 @@ evalFunc (Context * CtxF) = trait implements FuncSig<Eval (CtxF&Context)> => {
 
 -- BEGIN_POLY_MERGE
 expPoly Exp = trait [self : ExpSig<Exp> & VarSig<Exp> & FuncSig<Exp>] => {
-  test = new LetF "f" (\(x:Double) -> x * x)
+  test = new LetF "f" (\(x:Int) -> x * x)
                  (new Let "x" (new Lit 9) (new AppF "f" (new Var "x")));
 };
 e = new evalNum @(CtxD&CtxF) ,, evalVar @CtxF ,, evalFunc @CtxD ,,
         expPoly @(Eval (CtxD & CtxF));
-e.test.eval { envD = empty @Double, envF = empty @Func }  --> 81.0
+e.test.eval { envD = empty @Int, envF = empty @Func }  --> 81
 -- END_POLY_MERGE

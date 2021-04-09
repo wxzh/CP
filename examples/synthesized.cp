@@ -1,11 +1,11 @@
---> "((0.0-0.0)+0.0) and 0.0 and 0 and (3.0-(1.0+1.0)) = 1.0"
+--> "((0-0)+0) and 0 and 0 and (3-(1+1)) = 1"
 
 type ExprSig<E> = {
-  Lit : Double -> E,
+  Lit : Int -> E,
   Add : E -> E -> E
 };
 
-type HasValue = { value : Double };
+type HasValue = { value : Int };
 
 exprValue = trait implements ExprSig<HasValue> => {
   (Lit n).value = n;

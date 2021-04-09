@@ -1,3 +1,3 @@
---> 3.0
+--> 3
 
-({test (x : Double) = {b = x}, b = 4}.test 3).b
+({test (x : Int) = {b = x}, b = 4}.test 3).b

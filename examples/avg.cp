@@ -1,7 +1,7 @@
---> 7.0
+--> 7
 
-type Rcd = {x : Double, y : Double};
+type Rcd = {x : Int, y : Int};
 
 avg (R * Rcd) (r : R & Rcd) = r.x + r.y;
 
-avg @Double (4,,{x = 3, y = 4})
+avg @Int (4,,{x = 3, y = 4})

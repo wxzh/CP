@@ -1,4 +1,4 @@
---> 3.0
+--> 3
 
 max (x : Int) (y : Int) = if x > y then x else y;
 

@@ -1,4 +1,4 @@
---> 1.0
+--> 1
 
 type IdType T = {
   f : T -> T
@@ -12,6 +12,6 @@ idTrait (T * AType) = trait implements IdType T => {
   f = \(x:T) -> x
 };
 
-id = new idTrait @Double;
+id = new idTrait @Int;
 
-id.f 1.0
+id.f 1

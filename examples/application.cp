@@ -1,4 +1,4 @@
---> "-(2.0 + 3.0) = -5.0"
+--> "-(2 + 3) = -5"
 
 type ExpAlg E = { lit : Int -> E, add : E -> E -> E };
 type IEval = { eval : Int };
@@ -63,5 +63,5 @@ expExtAlg = trait inherits negEvalAlg ,, printAlg => {
 
 -- BEGIN_USE
 o = e2.accept @(IEval & IPrint) (new combinedAlg);
-o.print ++ " = " ++ o.eval.toString -- "-(2.0 + 3.0) = -5.0"
+o.print ++ " = " ++ o.eval.toString -- "-(2 + 3) = -5"
 -- END_USE

@@ -1,14 +1,14 @@
---> "let $x = (1.0+1.0) in $x^10.0 = 1024.0"
+--> "let $x = (1+1) in $x^10 = 1024"
 
 --------------
 --  Common  --
 --------------
 
 type Env T = String -> T;
-type EnvD = Env Double;
+type EnvD = Env Int;
 
 empty T = \(_ : String) -> undefined : T;
-eD = empty @Double;
+eD = empty @Int;
 
 lookup T (s : String) (env : Env T) = env s;
 
@@ -16,7 +16,7 @@ insert T (s : String) (v : T) (env : Env T) =
   \(s': String) -> if s == s' then v else lookup @T s' env;
 
 type Eval T = { eval : EnvD -> T };
-type EvalD = Eval Double;
+type EvalD = Eval Int;
 type EvalB = Eval Bool;
 
 type Print = { print : String };
@@ -31,7 +31,7 @@ type Codegen = { codegen : String };
 --------------
 
 type NExprSig<E> = {
-  Lit : Double -> E,
+  Lit : Int -> E,
   Neg : E -> E,
   Add : E -> E -> E,
   Sub : E -> E -> E,
@@ -40,7 +40,7 @@ type NExprSig<E> = {
   Pow : E -> E -> E
 };
 
-pow (b:Double) (x:Double) : Double = if x == 0 then 1 else b * pow b (x-1);
+pow (b:Int) (x:Int) : Int = if x == 0 then 1 else b * pow b (x-1);
 
 exprNEval = trait implements NExprSig<EvalD> => {
   (Lit n).eval (_:EnvD) = n;
@@ -81,7 +81,7 @@ exprNPrint' = trait implements NExprSig<EvalD%Print> => {
                       else e1.print ++ "^" ++ e2.print;
 };
 
-printAux (val:Double) (e1:Print) (e2:Print) (sep:String) =
+printAux (val:Int) (e1:Print) (e2:Print) (sep:String) =
   if val == 0 then "0" else "(" ++ e1.print ++ sep ++ e2.print ++ ")";
 
 exprNPrint'' = trait implements NExprSig<EvalD%Print> => {
@@ -415,9 +415,9 @@ type VarExprSig<E> = {
 
 exprVarEval = trait implements VarExprSig<EvalD> => {
   (Let name e1 e2).eval (env:EnvD) =
-    e2.eval (insert @Double name (e1.eval env) env);
+    e2.eval (insert @Int name (e1.eval env) env);
   (Var name).eval (env:EnvD) =
-    lookup @Double name env;
+    lookup @Int name env;
 };
 
 exprVarPrint = trait implements VarExprSig<Print> => {
