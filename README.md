@@ -1,8 +1,16 @@
 # Compositional Programming (CP)
 
-This artifact includes the Haskell implementation of the CP language introduced in the paper. It also contains several examples and three case studies written in CP. All of the CP programs in this artifact can typecheck and run using our CP interpreter.
+This artifact includes the Haskell implementation of the CP language introduced in the TOPLAS paper *Compositional Programming*. It also contains several examples and three case studies written in CP. All of the CP programs in this artifact can be type-checked and run using our CP interpreter.
 
-## Build and Run
+## Docker
+
+The image on Docker Hub can be pulled and run using the following command:
+
+```
+docker run -it yzyzsun/cp
+```
+
+## Build from Scratch
 
 This project can be built with [Stack](https://docs.haskellstack.org/en/stable/README/).
 
