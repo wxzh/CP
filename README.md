@@ -1,25 +1,14 @@
 # Compositional Programming (CP)
 
+This artifact includes the Haskell implementation of the CP language introduced in the paper. It also contains several examples and three case studies written in CP. All of the CP programs in this artifact can typecheck and run using our CP interpreter.
+
 ## Build and Run
 
-This project can be built with
-[Stack](https://docs.haskellstack.org/en/stable/README/) or
-[Cabal](https://www.haskell.org/cabal/download.html).
-
-### Stack (Recommended)
+This project can be built with [Stack](https://docs.haskellstack.org/en/stable/README/).
 
 ```
 stack build
 stack exec cp-exe
-```
-
-### Cabal
-
-```
-cabal sandbox init
-cabal install --only-dependencies
-cabal build
-cabal exec cp-exe
 ```
 
 ## REPL

@@ -146,7 +146,7 @@ shell pre =
   evalRepl "> " exec options (Prefix (wordCompleter comp) defaultMatcher) pre
 
 verStr :: String
-verStr = "CP, version OOPSLA"
+verStr = "CP, version TOPLAS"
 
 ini :: Repl ()
 ini = putMsg $ verStr ++ ", :? for help"
