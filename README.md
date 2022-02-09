@@ -2,6 +2,8 @@
 
 This artifact includes the Haskell implementation of the CP language introduced in the TOPLAS paper *Compositional Programming*. It also contains several examples and three case studies written in CP. All of the CP programs in this artifact can be type-checked and run using our CP interpreter.
 
+⚠️ This repository is not maintained. Please check our new implementation: <https://github.com/yzyzsun/CP-next>
+
 ## Docker
 
 The image on Docker Hub can be pulled and run using the following command:

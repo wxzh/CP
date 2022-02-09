@@ -1,0 +1,13 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Zhang
+    given-names: Weixin
+  - family-names: Sun
+    given-names: Yaozhu
+  - family-names: Oliveira
+    given-names: Bruno C. d. S.
+title: "Compositional Programming (Artifact)"
+version: TOPLAS
+doi: 10.4230/DARTS.7.2.11
+date-released: 2021-04-17
